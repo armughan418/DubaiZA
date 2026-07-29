@@ -1,0 +1,119 @@
+:root{
+    --p-main-color: #E31E24;
+    --font-color: #FFFFFF;
+    --h1-color: #0F172A;
+    --icons-color: #78808A;
+    --input-footer-bg: #FFF8F9;
+    --span-color: #4B5563;
+}
+.hero{
+    height: calc(100vh - 15vh);
+    width: 100%;
+    background: url(https://images.unsplash.com/photo-1600042924479-99c7046409aa?&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGdyb3VwJTIwbWVldGlufGVufDB8fDB8fHww);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+.hero .hero-page{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    z-index: 2;
+}
+.hero-page .hero-text{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+}
+.hero-text h1{
+    font-size: 3rem;
+    color: var(--font-color)
+}
+.hero-text h1 span{
+    color: var(--p-main-color);
+}
+.hero-text p{
+    color: var(--icons-color);
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+.hero-page .input-box{
+    height: 30vh;
+    width: 100%;
+    background-color:#FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 0.4rem;
+}
+.input-box .search-input{
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+.search-input input{
+    width: 80%;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid var(--icons-color);
+}
+.search-input button{
+    border: none;
+    outline: none;
+    padding: 0.8rem 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--font-color);
+    background-color: var(--p-main-color);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 165, 0, 0.3);
+    transition: all .5s ease-in-out;
+}
+.search-input button:hover{
+    background-color: #8e050a;
+}
+.input-box .help-box{
+    background-color: var(--input-footer-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+.help-box span{
+    color: var(--span-color);
+    font-size: 0.9rem;
+}
+.help-box a{
+    text-decoration: none;
+    color: var(--p-main-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+.help-box a:hover{
+    text-decoration: underline;
+}

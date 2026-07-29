@@ -1,0 +1,96 @@
+:root{
+    --p-main-color: #E31E24;
+    --font-color: #FFFFFF;
+    --h1-color: #0F172A;
+    --icons-color: #78808A;
+    --navbar-bg: #FFFFFF;
+}
+.navbar{
+    height: 15vh;
+    width: 100%;
+    display: flex;
+    padding: 1rem;
+    background-color: var(--navbar-bg);
+}
+.navbar .left-nav{
+    height: 100%;
+    width: 30%;
+    display: flex;
+}
+.left-nav .logo{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.logo p{
+    color: var(--font-color);
+    background-color: var(--p-main-color);
+    padding: 0.5rem 0.9rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.7rem;
+    box-shadow: 0 8px 20px rgba(255, 165, 0, 0.3);
+}
+.logo h1{
+    color: var(--h1-color);
+    font-size: 1.7rem;
+}
+.logo span{
+    color: var(--p-main-color);
+}
+.navbar .center-nav{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    width: 40%;
+    gap: 2rem;
+}
+.center-nav .icons{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: center;
+    color: var(--icons-color);
+    transition: all .5s ease-in-out;
+    cursor: pointer;
+}
+.center-nav button{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all .5s ease-in-out;
+    cursor: pointer;
+}
+.center-nav button:hover{
+    color: var(--p-main-color);
+}
+.navbar .right-nav{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.right-nav .postBtn{
+    border: none;
+    outline: none;
+    padding: 0.6rem 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--font-color);
+    background-color: var(--p-main-color);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 165, 0, 0.3);
+    transition: all .5s ease-in-out;
+}
+.right-nav .postBtn:hover{
+    transform: translateY(-5px);
+}
