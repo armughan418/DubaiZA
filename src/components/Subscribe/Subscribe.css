@@ -1,0 +1,147 @@
+.sub-page{
+    height: 50vh;
+    width: 100%;
+    background: linear-gradient(to bottom, #0f172a, rgba(15, 23, 42, 0));
+    display: flex;
+}
+.sub-page .sub-left{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem;
+}
+.sub-left .sub-text{
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.sub-text h1{
+    color: #FFFFFF;
+    font-size: 1.5rem;
+}
+.sub-text p{
+    color: #D1D5DB;
+    font-weight: 500;
+    font-size: 1rem;
+}
+.sub-left .sub-buttons{
+    display: flex;
+    gap: 1rem;
+    cursor: pointer;
+}
+.sub-buttons .app-btn{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 0.2rem 0.9rem;
+    transition: all .5s ease-in-out;
+}
+.sub-buttons .app-btn:hover{
+    transform: translateY(-5px);
+}
+.app-btn .app-text{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.app-text p{
+    color: #aeb1b7;
+    font-weight: 600;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+}
+.app-text span{
+    color: var(--h1-color);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+.sub-buttons .google-btn{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all .5s ease-in-out;
+    border: 1px solid grey;
+    padding: 0.2rem 0.9rem;
+    border-radius: 10px;
+}
+.sub-buttons .google-btn:hover{
+    transform: translateY(-5px);
+}
+.google-btn .google-text{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.google-text p{
+    color: #D1D5DB;
+    font-weight: 600;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+}
+.google-text span{
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+.sub-page .sub-right{
+    height: 100%;
+    width: 50%;
+    padding: 2rem;
+}
+.sub-right .input-box{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+}
+.input-box h1{
+    color: #FFFFFF;
+    font-size: 1.5rem;
+}
+.input-box p{
+    color: #D1D5DB;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.input-box .input-wrapper{
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+.input-wrapper input{
+    width: 70%;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid var(--icons-color);
+}
+.input-wrapper button{
+    border: none;
+    outline: none;
+    padding: 0.8rem 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--font-color);
+    background-color: var(--p-main-color);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 165, 0, 0.3);
+    transition: all .5s ease-in-out;
+}
+.input-wrapper button:hover{
+    background-color: #8e050a;
+}

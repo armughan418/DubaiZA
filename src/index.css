@@ -5,7 +5,67 @@
   box-sizing: border-box;
   font-family: "Outfit", sans-serif;
 }
+:root{
+    --p-main-color: #E31E24;
+    --font-color: #FFFFFF;
+    --h1-color: #0F172A;
+    --icons-color: #78808A;
+    --input-footer-bg: #FFF8F9;
+    --span-color: #4B5563;
+    --trend-icon-color-bg: #FEF3C7;
+    --trend-icon-color: #D97706;
+    --grey-color: #D2D0C6;
+
+}
 body{
   height: 100vh;
   width: 100%;
+}
+.trend-page{
+  min-height: 100vh;
+  width: 100%;
+  background-color: #F9FAFB;
+}
+.trend-page .trend-text{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+}
+.trend-text .text-left{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.text-left .icon-wrap{
+  background-color: var(--trend-icon-color-bg);
+  color: var(--trend-icon-color);
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
+}
+.text-left h1{
+  color: var(--h1-color);
+  font-size: 1.5rem;
+}
+.trend-text .text-right a{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--p-main-color);
+  font-weight: 500;
+  transition: all .5s ease-in-out;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.trend-text .text-right a:hover{
+  background-color: #FFF0F1;
+}
+.trend-page .trend-cards{
+  height: 100%;
+  width: 100%;
+  padding: 0 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
 }
