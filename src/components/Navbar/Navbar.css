@@ -94,3 +94,38 @@
 .right-nav .postBtn:hover{
     transform: translateY(-5px);
 }
+/* ==================== TABLET (max-width: 900px) ==================== */
+@media (max-width: 900px) {
+    .navbar .left-nav {
+        width: 50%;
+    }
+
+    .navbar .center-nav {
+        display: none; /* hide nav links, needs a hamburger menu to replace it */
+    }
+
+    .navbar .right-nav {
+        width: 50%;
+    }
+}
+
+/* ==================== MOBILE (max-width: 600px) ==================== */
+@media (max-width: 600px) {
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
+
+    .logo p {
+        padding: 0.4rem 0.7rem;
+        font-size: 1.3rem;
+    }
+
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+
+    .right-nav .postBtn {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.85rem;
+    }
+}

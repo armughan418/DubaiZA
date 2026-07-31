@@ -101,3 +101,32 @@
 .quick-links ul a:hover{
     color: var(--p-main-color);
 }
+/* ==================== TABLET (max-width: 900px) ==================== */
+@media (max-width: 900px) {
+    .footer {
+        height: auto;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+        padding: 2.5rem 2rem;
+    }
+}
+
+/* ==================== MOBILE (max-width: 600px) ==================== */
+@media (max-width: 600px) {
+    .footer {
+        height: auto;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 2rem 1.5rem;
+    }
+
+    .footer-logo .logo {
+        justify-content: flex-start;
+    }
+
+    .company h1,
+    .support h1,
+    .quick-links h1 {
+        font-size: 1.1rem;
+    }
+}

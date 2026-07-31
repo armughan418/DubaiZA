@@ -117,3 +117,58 @@
 .help-box a:hover{
     text-decoration: underline;
 }
+/* ==================== TABLET (max-width: 900px) ==================== */
+@media (max-width: 900px) {
+    .hero {
+        height: auto;
+        min-height: calc(100vh - 15vh);
+        padding: 3rem 1.5rem;
+    }
+
+    .hero-page .input-box {
+        height: auto;
+        gap: 1rem;
+    }
+}
+
+/* ==================== MOBILE (max-width: 600px) ==================== */
+@media (max-width: 600px) {
+    .hero {
+        padding: 2.5rem 1rem;
+    }
+
+    .hero-text h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-text p {
+        font-size: 0.95rem;
+    }
+
+    .hero-page .input-box {
+        height: auto;
+        padding: 0.6rem;
+    }
+
+    .search-input {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .search-input input {
+        width: 100%;
+        padding: 0.8rem 1.2rem;
+    }
+
+    .search-input button {
+        width: 100%;
+        padding: 0.8rem;
+    }
+
+    .help-box {
+        flex-direction: column;
+        gap: 0.6rem;
+        text-align: center;
+        padding: 0.8rem;
+    }
+}

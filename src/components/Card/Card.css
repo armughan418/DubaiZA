@@ -126,3 +126,51 @@
     color: grey;
     font-size: 0.7em;
 }
+/* ==================== TABLET (max-width: 900px) ==================== */
+@media (max-width: 900px) {
+    .card {
+        height: auto;
+    }
+
+    .card .card-top {
+        height: 35vh;
+    }
+}
+
+/* ==================== MOBILE (max-width: 600px) ==================== */
+@media (max-width: 600px) {
+    .card {
+        height: auto;
+    }
+
+    .card .card-top {
+        height: 220px; /* fixed px instead of vh — more predictable on small screens */
+    }
+
+    .card-text {
+        padding: 0.8rem;
+        gap: 0.6rem;
+    }
+
+    .card-text h1 {
+        font-size: 0.9rem;
+    }
+
+    .card-text .card-labels {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .card-tag span {
+        font-size: 0.65rem;
+        padding: 0.4rem;
+    }
+
+    .card-tag p {
+        font-size: 0.7rem;
+    }
+
+    .price-box h1 {
+        font-size: 0.9rem;
+    }
+}

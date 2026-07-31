@@ -145,3 +145,72 @@
 .input-wrapper button:hover{
     background-color: #8e050a;
 }
+/* ==================== TABLET (max-width: 900px) ==================== */
+@media (max-width: 900px) {
+    .sub-page {
+        height: auto;
+        flex-direction: column;
+    }
+
+    .sub-page .sub-left,
+    .sub-page .sub-right {
+        width: 100%;
+    }
+
+    .sub-left {
+        padding: 2rem;
+    }
+}
+
+/* ==================== MOBILE (max-width: 600px) ==================== */
+@media (max-width: 600px) {
+    .sub-left {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .sub-text h1 {
+        font-size: 1.2rem;
+    }
+
+    .sub-text p {
+        font-size: 0.9rem;
+    }
+
+    .sub-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .sub-buttons .app-btn,
+    .sub-buttons .google-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .sub-right {
+        padding: 1.5rem;
+    }
+
+    .sub-right .input-box {
+        padding: 1.5rem;
+    }
+
+    .input-box h1 {
+        font-size: 1.2rem;
+    }
+
+    .input-wrapper {
+        flex-direction: column;
+    }
+
+    .input-wrapper input {
+        width: 100%;
+        padding: 0.8rem 1.2rem;
+    }
+
+    .input-wrapper button {
+        width: 100%;
+        padding: 0.8rem;
+    }
+}
