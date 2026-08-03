@@ -5,7 +5,7 @@ import {Check, Apple, Globe} from 'lucide-react'
 const Login = () => {
     function hidePage(){
         const loginPage = document.querySelector(".login-page");
-        loginPage.classList.add("hide");
+        loginPage.classList.toggle("hide");
     }
   return (
     <div className= 'login-page hide'>

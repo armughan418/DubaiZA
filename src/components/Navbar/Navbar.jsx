@@ -8,12 +8,12 @@ import { Plus } from 'lucide-react';
 const Navbar = () => {
   function handleClick(){
     const loginPage = document.querySelector(".login-page");
-    loginPage.classList.remove("hide");
+    loginPage.classList.toggle("hide");
   }
 
   function handleClickRegister(){
     const registerPage = document.querySelector(".register-page");
-    registerPage.classList.remove("hide");
+    registerPage.classList.toggle("hide");
   }
 
   return (

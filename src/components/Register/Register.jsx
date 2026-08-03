@@ -5,7 +5,7 @@ import {Check, Apple, Globe} from 'lucide-react'
 const Register = () => {
     function hidePage(){
         const registerPage = document.querySelector(".register-page");
-        registerPage.classList.add("hide");
+        registerPage.classList.toggle("hide");
     }
 
   return (
