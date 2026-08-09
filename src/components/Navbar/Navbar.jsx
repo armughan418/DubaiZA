@@ -5,17 +5,7 @@ import { MessageCircle } from 'lucide-react';
 import { Heart } from 'lucide-react';
 import { Plus } from 'lucide-react';
 
-const Navbar = () => {
-  function handleClick(){
-    const loginPage = document.querySelector(".login-page");
-    loginPage.classList.toggle("hide");
-  }
-
-  function handleClickRegister(){
-    const registerPage = document.querySelector(".register-page");
-    registerPage.classList.toggle("hide");
-  }
-
+const Navbar = ({setLogin, setRegister}) => {
   return (
     <div className='navbar'>
       <div className="left-nav">
@@ -30,8 +20,12 @@ const Navbar = () => {
           <MessageCircle />
           <Heart />
         </div>
-        <button className='loginBtn' onClick = {handleClick}>Login</button>
-        <button className='registerBtn' onClick = {handleClickRegister}>Register</button>
+        <button className='loginBtn' onClick = {() =>{
+          setLogin(true);
+        }}>Login</button>
+        <button className='registerBtn' onClick = {() =>{
+          setRegister(true);
+        }}>Register</button>
       </div>
       <div className="right-nav">
         <button className='postBtn'><Plus size={28} />Post Ad</button>

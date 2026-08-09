@@ -1,17 +1,16 @@
-import React from 'react'
 import "./Login.css"
-import {Check, Apple, Globe} from 'lucide-react'
+import {Check, Apple, Globe, X, Triangle} from 'lucide-react'
 
-const Login = () => {
-    function hidePage(){
-        const loginPage = document.querySelector(".login-page");
-        loginPage.classList.toggle("hide");
-    }
+const Login = ({setLogin}) => {
   return (
-    <div className= 'login-page hide'>
-        
+    <div className= 'login-page'>
         <div className="modal-overlay">
             <div className="modal-box">
+                <div className="cross-icon">
+            <X size={30} onClick={() =>{
+                setLogin(false);
+            }}/>
+        </div>
                 <div className="login-left">
         <p>D</p>
         <div className="left-text">
@@ -38,7 +37,7 @@ const Login = () => {
             <h1>Welcome Back</h1>
             <p>Enter your details to sign in</p>
         </div>
-        <div className="social-btn" onClick={hidePage}>
+        <div className="social-btn">
             <button className='google'><Globe color='#D7484D' />Continue with Google</button>
             <button className='apple'><Apple color='#FFFFFF' />Continue with Apple</button>
         </div>

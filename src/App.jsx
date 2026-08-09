@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from "./components/Navbar/Navbar";
 import Main from "./pages/Main";
 import Subscribe from "./components/Subscribe/Subscribe";
@@ -7,14 +7,16 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 
 const App = () => {
+  const [showLogin, setLogin] = useState(false);
+  const [showRegister, setRegister] = useState(false);
   return (
     <div>
-      <Navbar />
+      <Navbar setLogin = {setLogin} setRegister = {setRegister} />
       <Main />
       <Subscribe />
       <Footer />
-      <Login />
-      <Register />
+      {showLogin && <Login setLogin = {setLogin} />}
+      {showRegister && <Register setRegister = {setRegister} />}
     </div>
   )
 }

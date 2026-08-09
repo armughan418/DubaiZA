@@ -1,17 +1,16 @@
-import React, { useState } from 'react'
 import "./Register.css"
-import {Check, Apple, Globe} from 'lucide-react'
+import {Check, Apple, Globe, X} from 'lucide-react'
 
-const Register = () => {
-    function hidePage(){
-        const registerPage = document.querySelector(".register-page");
-        registerPage.classList.toggle("hide");
-    }
-
+const Register = ({setRegister}) => {
   return (
     <div className='register-page'>
       <div className="modal-overlay">
             <div className="modal-box">
+                <div className="cross-icon">
+            <X size={30} onClick={() =>{
+                setRegister(false);
+            }}/>
+        </div>
                 <div className="register-left">
         <p>D</p>
         <div className="left-text">
@@ -38,7 +37,7 @@ const Register = () => {
             <h1>Create Account</h1>
             <p>Join thousands of users in UAE today</p>
         </div>
-        <div className="social-btn" onClick={hidePage}>
+        <div className="social-btn">
             <button className='google'><Globe color='#D7484D' />Continue with Google</button>
             <button className='apple'><Apple color='#FFFFFF' />Continue with Apple</button>
         </div>
