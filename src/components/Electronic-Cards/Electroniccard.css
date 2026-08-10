@@ -1,0 +1,83 @@
+.electronics-card-page{
+    min-height: 100vh;
+  width: 100%;
+  background-color: #F9FAFB;
+}
+.electronics-card-page .trend-text{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+}
+.trend-text .text-left{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.text-left .icon-wrap{
+  background-color: var(--trend-icon-color-bg);
+  color: var(--trend-icon-color);
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
+}
+.text-left h1{
+  color: var(--h1-color);
+  font-size: 1.5rem;
+}
+.trend-text .text-right a{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  transition: all .5s ease-in-out;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  background-color: #E31E24;
+}
+.trend-text .text-right a:hover{
+   background-color: #BD1319;
+}
+.electronics-card-page .electronics-cards{
+  height: 100%;
+  width: 100%;
+  padding: 0 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+/* ==================== TABLET (max-width: 900px) ==================== */
+@media (max-width: 900px) {
+    .electronics-card-page .electronics-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==================== MOBILE (max-width: 600px) ==================== */
+@media (max-width: 600px) {
+    .electronics-card-page .trend-text {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .text-left h1 {
+        font-size: 1.2rem;
+    }
+
+    .trend-text .text-right a {
+        width: 100%;
+        justify-content: center;
+        padding: 0.7rem 1rem;
+    }
+
+    .electronics-card-page .electronics-cards {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+        gap: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+}

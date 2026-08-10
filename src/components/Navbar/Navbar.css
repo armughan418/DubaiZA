@@ -9,12 +9,12 @@
     height: 15vh;
     width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 1rem;
     background-color: var(--navbar-bg);
 }
 .navbar .left-nav{
-    height: 100%;
-    width: 30%;
     display: flex;
 }
 .left-nav .logo{
@@ -42,18 +42,20 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 100%;
-    width: 40%;
     gap: 2rem;
 }
-.center-nav .icons{
+.center-nav ul{
     display: flex;
-    align-items: center;
-    gap: 2rem;
-    justify-content: center;
-    color: var(--icons-color);
-    transition: all .5s ease-in-out;
+    gap: 1rem;
+}
+.center-nav ul a{
+    text-decoration: none;
+    color: #78808A;
     cursor: pointer;
+    transition: all .5s ease-in-out;
+}
+.center-nav ul a:hover{
+    color: var(--p-main-color);
 }
 .center-nav button{
     border: none;
@@ -68,8 +70,6 @@
     color: var(--p-main-color);
 }
 .navbar .right-nav{
-    height: 100%;
-    width: 30%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -94,18 +94,112 @@
 .right-nav .postBtn:hover{
     transform: translateY(-5px);
 }
+/* Hamburger icon — hidden by default, shown on smaller screens */
+.hamburger {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--h1-color);
+}
+
+/* Mobile menu overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: flex-end;
+    z-index: 999;
+}
+
+.mobile-menu {
+    background-color: var(--navbar-bg);
+    width: 75%;
+    max-width: 320px;
+    height: 100%;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.close-menu {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--h1-color);
+}
+
+.mobile-menu ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.mobile-menu ul a {
+    text-decoration: none;
+    color: var(--h1-color);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.mobile-menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.mobile-menu-buttons .loginBtn,
+.mobile-menu-buttons .registerBtn {
+    border: 1px solid var(--icons-color);
+    background-color: transparent;
+    padding: 0.7rem;
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.mobile-menu-buttons .postBtn {
+    border: none;
+    outline: none;
+    padding: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    color: var(--font-color);
+    background-color: var(--p-main-color);
+    border-radius: 10px;
+    cursor: pointer;
+}
 /* ==================== TABLET (max-width: 900px) ==================== */
 @media (max-width: 900px) {
     .navbar .left-nav {
-        width: 50%;
+        width: auto;
     }
 
     .navbar .center-nav {
-        display: none; /* hide nav links, needs a hamburger menu to replace it */
+        display: none;
     }
 
     .navbar .right-nav {
-        width: 50%;
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
     }
 }
 

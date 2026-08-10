@@ -1,0 +1,119 @@
+.furniture-hero{
+    height: 85vh;
+    width: 100%;
+    background-image: url(https://images.unsplash.com/photo-1780519123579-2088d9560826?&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnVybml0dXJlJTIwYW5kJTIwZ2FyZGVuJTIwY29tYmluZSUyMGltYWdlfGVufDB8fDB8fHww);
+    background-position: bottom;
+    background-size: cover;
+    padding: 8rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.furniture-hero .furniture-text{
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.furniture-text h1{
+    font-size: 4rem;
+    color: #fff;
+}
+.furniture-text p{
+    color: #D5D6DB;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+.furniture-hero .input-box{
+    display: flex;
+    position: relative;
+    width: 60%;
+}
+.input-box .searchIcon{
+    position: absolute;
+    bottom: 1.2rem;
+    left: 0.8rem;
+    cursor: pointer;
+    color: #D5D6DB;
+}
+.input-box input{
+    border: none;
+    outline: none;
+    padding: 1.3rem 3rem;
+    background-color: #fff;
+    border-radius: 10px;
+}
+.input-box .searchBtn{
+    background-color: #E31E24;
+    padding: 0.8rem 2rem;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    position: absolute;
+    right: 1.1rem;
+    top: 0.4rem;
+}
+.input-box .searchBtn:hover{
+    background-color: #BD1319;
+}
+/* ==================== TABLET (max-width: 900px) ==================== */
+@media (max-width: 900px) {
+    .furniture-hero {
+        height: auto;
+        padding: 5rem 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .furniture-text h1 {
+        font-size: 2.8rem;
+    }
+
+    .furniture-hero .input-box {
+        width: 90%;
+    }
+}
+
+/* ==================== MOBILE (max-width: 600px) ==================== */
+@media (max-width: 600px) {
+    .furniture-hero {
+        padding: 4rem 1rem;
+        gap: 1.2rem;
+    }
+
+    .furniture-text h1 {
+        font-size: 1.8rem;
+    }
+
+    .furniture-text p {
+        font-size: 1rem;
+    }
+
+    .furniture-hero .input-box {
+        width: 100%;
+        flex-direction: column;
+        position: static;
+        gap: 0.8rem;
+    }
+
+    .input-box .searchIcon {
+        position: absolute;
+        bottom: auto;
+        top: 1.1rem;
+        left: 0.8rem;
+    }
+
+    .input-box input {
+        width: 100%;
+        padding: 1rem 1rem 1rem 2.5rem;
+    }
+
+    .input-box .searchBtn {
+        position: static;
+        width: 100%;
+        padding: 0.9rem;
+    }
+}
