@@ -1,0 +1,127 @@
+.site-header {
+  position: relative;
+  z-index: 20;
+  background: #fff;
+}
+
+.utility-nav {
+  display: flex;
+  min-height: 30px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.3rem clamp(1rem, 4vw, 4rem);
+  border-bottom: 1px solid #eceef0;
+  color: #68737d;
+  background: #f6f7f8;
+  font-size: 0.7rem;
+}
+
+.utility-nav > div {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.site-header .navbar {
+  height: 74px;
+  padding: 0.7rem clamp(1rem, 4vw, 4rem);
+  border-bottom: 1px solid #eceef0;
+}
+.site-header .logo p {
+  border-radius: 5px;
+  background: #d71920;
+  box-shadow: none;
+}
+.site-header .logo h1 {
+  font-size: 1.5rem;
+}
+.site-header .center-nav {
+  gap: 1.35rem;
+}
+.site-header .center-nav ul {
+  gap: 1.1rem;
+  list-style: none;
+}
+.site-header .center-nav ul a,
+.site-header .center-nav button {
+  font-size: 0.85rem;
+}
+.site-header .right-nav .postBtn {
+  padding: 0.65rem 1.1rem;
+  border-radius: 5px;
+  background: #d71920;
+  box-shadow: none;
+  font-size: 0.86rem;
+}
+.site-header .right-nav .postBtn:hover {
+  transform: translateY(-1px);
+  background: #b91319;
+}
+.category-nav {
+  display: flex;
+  min-height: 45px;
+  align-items: center;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding: 0 clamp(1rem, 4vw, 4rem);
+  border-bottom: 1px solid #e4e7ea;
+  scrollbar-width: none;
+}
+.category-nav::-webkit-scrollbar {
+  display: none;
+}
+.category-nav a,
+.category-nav button {
+  flex: 0 0 auto;
+  border: 0;
+  padding: 0.55rem 0;
+  color: #58636d;
+  background: transparent;
+  font: inherit;
+  font-size: 0.78rem;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.category-nav a.active,
+.category-nav button.active,
+.category-nav a:hover,
+.category-nav button:hover {
+  color: #c91219;
+}
+.site-header .hamburger {
+  border: 0;
+  background: transparent;
+}
+
+@media (max-width: 1000px) {
+  .site-header .center-nav,
+  .site-header .right-nav {
+    display: none;
+  }
+  .site-header .hamburger {
+    display: flex;
+  }
+}
+
+@media (max-width: 650px) {
+  .site-header .navbar {
+    height: 64px;
+  }
+  .utility-nav {
+    padding-inline: 1rem;
+    font-size: 0.63rem;
+  }
+  .utility-nav > div {
+    gap: 0.7rem;
+  }
+  .category-nav {
+    min-height: 40px;
+    gap: 1rem;
+    padding-inline: 1rem;
+  }
+  .category-nav a,
+  .category-nav button {
+    font-size: 0.72rem;
+  }
+}

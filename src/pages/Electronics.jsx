@@ -1,17 +1,13 @@
-import React from 'react'
-import Navbar from '../components/Navbar/Navbar'
-import Electronichero from '../components/Electronic-Hero/Electronichero'
-import Electronicscard from '../components/Electronic-Cards/Electronicscard'
-import Subscribe from '../components/Subscribe/Subscribe'
-import Footer from '../components/Footer/Footer'
+import Electronichero from "../components/Electronic-Hero/Electronichero";
+import Electronicscard from "../components/Electronic-Cards/Electronicscard";
 
-const Electronics = () => {
+const Electronics = ({ onOpenListing }) => {
   return (
     <div>
       <Electronichero />
-      <Electronicscard />
+      <Electronicscard onOpenListing={onOpenListing} />
     </div>
-  )
-}
+  );
+};
 
-export default Electronics
+export default Electronics;
