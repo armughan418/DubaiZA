@@ -468,6 +468,9 @@
     padding-inline: 12px;
     font-size: 0.61rem;
   }
+  .utility-nav > div:first-child a:not(:first-child) {
+    display: none;
+  }
   .utility-nav > div {
     gap: 0.65rem;
   }

@@ -848,3 +848,46 @@
     transform: translateY(50px) rotate(3deg);
   }
 }
+
+@media (max-width: 420px) {
+  .market-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .career-copy {
+    align-items: flex-start;
+    padding: 1rem;
+  }
+  .career-copy-content {
+    max-width: 100%;
+  }
+  .career-decoration {
+    top: 0.8rem;
+    right: 0.75rem;
+    width: 72px;
+    height: 72px;
+  }
+  .career-actions {
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .career-copy .career-actions button {
+    min-height: 42px;
+    padding-inline: 0.75rem;
+    font-size: 0.8rem;
+    white-space: normal;
+  }
+  .spotlight-band {
+    flex-wrap: wrap;
+  }
+  .spotlight-band > div {
+    min-width: 0;
+    flex: 1 1 calc(100% - 60px);
+  }
+  .spotlight-band h2,
+  .spotlight-band p {
+    white-space: normal;
+  }
+  .spotlight-band > button {
+    margin-left: 3.2rem;
+  }
+}

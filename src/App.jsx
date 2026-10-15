@@ -10,15 +10,21 @@ import Electronics from "./pages/Electronics";
 import FurGar from "./pages/FurGar";
 import ProductDetail from "./pages/ProductDetail";
 import { listings as sampleListings } from "./pages/marketplaceData";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
 const App = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const openListing = (listingOrId) => {
+    const existingListing = allListings.find(
+      (item) =>
+        String(item.id) ===
+        String(typeof listingOrId === "object" ? listingOrId.id : listingOrId),
+    );
     const listing =
       typeof listingOrId === "object"
-        ? listingOrId
-        : allListings.find((item) => String(item.id) === String(listingOrId));
+        ? { ...existingListing, ...listingOrId }
+        : existingListing;
     if (listing) {
       sessionStorage.setItem(
         `dubaiza-listing-${listing.id}`,
@@ -35,7 +41,6 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All");
   const [city, setCity] = useState("All Cities");
-  const [showPostAd, setShowPostAd] = useState(false);
   const [postedListings, setPostedListings] = useState([]);
   const [savedListings, setSavedListings] = useState([]);
   const authenticateUser = (user) => {
@@ -60,7 +65,7 @@ const App = () => {
     setPostedListings((items) => [listing, ...items]);
     setCategory("All");
     handleSearch("", "All Cities");
-    setShowPostAd(false);
+    navigate("/");
   };
   const allListings = [...postedListings, ...sampleListings];
   return (
@@ -68,13 +73,17 @@ const App = () => {
       <Navbar
         setLogin={setLogin}
         setRegister={setRegister}
-        onPostAd={() => setShowPostAd(true)}
+        onPostAd={() => navigate("/post-ad")}
         onCategorySelect={handleCategorySelect}
         category={category}
         currentUser={currentUser}
         onLogout={() => setCurrentUser(null)}
       />
       <Routes>
+        <Route
+          path="/post-ad"
+          element={<PostAdModal onPublish={publishListing} />}
+        />
         <Route
           path="/"
           element={
@@ -115,19 +124,17 @@ const App = () => {
           element={<FurGar onOpenListing={openListing} />}
         />
       </Routes>
-      <Subscribe />
-      <Footer />
+      {location.pathname !== "/post-ad" && (
+        <>
+          <Subscribe />
+          <Footer />
+        </>
+      )}
       {showLogin && (
         <Login setLogin={setLogin} onAuthenticate={authenticateUser} />
       )}
       {showRegister && (
         <Register setRegister={setRegister} onAuthenticate={authenticateUser} />
-      )}
-      {showPostAd && (
-        <PostAdModal
-          onClose={() => setShowPostAd(false)}
-          onPublish={publishListing}
-        />
       )}
     </>
   );

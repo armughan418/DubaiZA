@@ -76,13 +76,15 @@
 }
 
 .sub-page {
-  height: 50vh;
+  min-height: 350px;
   width: 100%;
+  flex-wrap: wrap;
+  align-items: stretch;
   background: linear-gradient(to bottom, #0f172a, rgba(15, 23, 42, 0));
   display: flex;
 }
 .sub-page .sub-left {
-  height: 100%;
+  min-height: 100%;
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -165,7 +167,7 @@
   font-size: 1.2rem;
 }
 .sub-page .sub-right {
-  height: 100%;
+  min-height: 100%;
   width: 50%;
   padding: 2rem;
 }
@@ -181,28 +183,31 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   padding: 2rem;
 }
-.input-box h1 {
+.sub-right .input-box h1 {
   color: #ffffff;
   font-size: 1.5rem;
 }
-.input-box p {
+.sub-right .input-box p {
   color: #d1d5db;
   font-weight: 600;
   font-size: 1rem;
 }
-.input-box .input-wrapper {
+.sub-right .input-box .input-wrapper {
   width: 100%;
+  min-width: 0;
   display: flex;
   gap: 1rem;
 }
-.input-wrapper input {
-  width: 70%;
+.sub-right .input-wrapper input {
+  min-width: 0;
+  flex: 1;
   padding: 1rem 2rem;
   border-radius: 10px;
   outline: none;
   border: 1px solid var(--icons-color);
 }
-.input-wrapper button {
+.sub-right .input-wrapper button {
+  flex: 0 0 auto;
   border: none;
   outline: none;
   padding: 0.8rem 2.2rem;
@@ -219,7 +224,7 @@
   box-shadow: 0 8px 20px rgba(255, 165, 0, 0.3);
   transition: all 0.5s ease-in-out;
 }
-.input-wrapper button:hover {
+.sub-right .input-wrapper button:hover {
   background-color: #8e050a;
 }
 /* ==================== TABLET (max-width: 900px) ==================== */
@@ -277,16 +282,17 @@
     font-size: 1.2rem;
   }
 
-  .input-wrapper {
+  .sub-right .input-wrapper {
     flex-direction: column;
   }
 
-  .input-wrapper input {
+  .sub-right .input-wrapper input {
     width: 100%;
+    flex: 0 1 auto;
     padding: 0.8rem 1.2rem;
   }
 
-  .input-wrapper button {
+  .sub-right .input-wrapper button {
     width: 100%;
     padding: 0.8rem;
   }

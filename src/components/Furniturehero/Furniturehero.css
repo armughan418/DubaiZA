@@ -28,21 +28,21 @@
     position: relative;
     width: 60%;
 }
-.input-box .searchIcon{
+.furniture-hero .input-box .searchIcon{
     position: absolute;
     bottom: 1.2rem;
     left: 0.8rem;
     cursor: pointer;
     color: #D5D6DB;
 }
-.input-box input{
+.furniture-hero .input-box input{
     border: none;
     outline: none;
     padding: 1.3rem 3rem;
     background-color: #fff;
     border-radius: 10px;
 }
-.input-box .searchBtn{
+.furniture-hero .input-box .searchBtn{
     background-color: #E31E24;
     padding: 0.8rem 2rem;
     outline: none;
@@ -57,7 +57,7 @@
     right: 1.1rem;
     top: 0.4rem;
 }
-.input-box .searchBtn:hover{
+.furniture-hero .input-box .searchBtn:hover{
     background-color: #BD1319;
 }
 /* ==================== TABLET (max-width: 900px) ==================== */
@@ -99,19 +99,19 @@
         gap: 0.8rem;
     }
 
-    .input-box .searchIcon {
+    .furniture-hero .input-box .searchIcon {
         position: absolute;
         bottom: auto;
         top: 1.1rem;
         left: 0.8rem;
     }
 
-    .input-box input {
+    .furniture-hero .input-box input {
         width: 100%;
         padding: 1rem 1rem 1rem 2.5rem;
     }
 
-    .input-box .searchBtn {
+    .furniture-hero .input-box .searchBtn {
         position: static;
         width: 100%;
         padding: 0.9rem;

@@ -1,5 +1,5 @@
 .card{
-    height: 75vh;
+    height: 100%;
     width: 100%;
     background-color: #FFFFFF;
     border-radius: 10px;
@@ -13,7 +13,8 @@
     border: 1px solid var(--p-main-color);
 }
 .card .card-top{
-    height: 40vh;
+    height: auto;
+    aspect-ratio: 1.55;
     width: 100%;
 }
 .card-top img{
@@ -133,7 +134,7 @@
     }
 
     .card .card-top {
-        height: 35vh;
+        height: auto;
     }
 }
 
@@ -144,7 +145,8 @@
     }
 
     .card .card-top {
-        height: 220px; /* fixed px instead of vh — more predictable on small screens */
+        height: auto;
+        aspect-ratio: 1.4;
     }
 
     .card-text {

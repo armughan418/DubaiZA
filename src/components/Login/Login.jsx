@@ -1,4 +1,4 @@
-import "./Login.css";
+import "../AuthModal.css";
 import { Check, X } from "lucide-react";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -45,6 +45,10 @@ const Login = ({ setLogin, onAuthenticate }) => {
           >
             <X size={24} />
           </button>
+          <div className="auth-mobile-header" aria-hidden="true">
+            <span className="auth-mobile-logo">D</span>
+            <span className="auth-mobile-brand">DubaiZA</span>
+          </div>
           <div className="login-left">
             <p>D</p>
             <div className="left-text">

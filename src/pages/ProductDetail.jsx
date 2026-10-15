@@ -100,6 +100,7 @@ const ProductDetail = ({
   const location = useLocation();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [chatOpen, setChatOpen] = useState(false);
   const [callOpen, setCallOpen] = useState(false);
   const [isCalling, setIsCalling] = useState(false);
@@ -141,6 +142,18 @@ const ProductDetail = ({
     );
   }
 
+  const listingImages =
+    listing.images?.length > 0 ? listing.images : [listing.image];
+  const listingSpecifications = Object.entries(listing.specifications || {});
+  const sellerName =
+    listing.contact?.name ||
+    (listing.tag === "Real Estate" ? "Property Partner" : "DubaiZA Seller");
+  const contactMethods = listing.contact?.methods?.length
+    ? listing.contact.methods
+    : ["Chat", "Phone"];
+  const sellerPhone = listing.contact?.phone || "+971 50 123 4567";
+  const sellerPhoneHref = `tel:${sellerPhone.replace(/[^\d+]/g, "")}`;
+  const sellerWhatsAppHref = `https://wa.me/${sellerPhone.replace(/\D/g, "")}`;
   const facts = categoryFacts[listing.tag] || [
     "Category",
     "Details",
@@ -237,14 +250,32 @@ const ProductDetail = ({
               <div className="product-gallery">
                 <img
                   className="product-main-image"
-                  src={listing.image}
+                  src={listingImages[activeImageIndex]}
                   alt={listing.title}
                 />
-                <span className="gallery-count">1 photo</span>
+                <span className="gallery-count">
+                  {activeImageIndex + 1} / {listingImages.length} photos
+                </span>
                 {listing.badge && (
                   <span className="detail-badge">{listing.badge}</span>
                 )}
               </div>
+              {listingImages.length > 1 && (
+                <div className="product-gallery-thumbnails" aria-label="Listing photos">
+                  {listingImages.map((image, index) => (
+                    <button
+                      className={index === activeImageIndex ? "is-active" : ""}
+                      key={`${image}-${index}`}
+                      type="button"
+                      aria-label={`Show photo ${index + 1}`}
+                      aria-pressed={index === activeImageIndex}
+                      onClick={() => setActiveImageIndex(index)}
+                    >
+                      <img src={image} alt="" />
+                    </button>
+                  ))}
+                </div>
+              )}
               <article className="product-information">
                 <div className="product-category-line">
                   <span>{listing.tag}</span>
@@ -286,23 +317,30 @@ const ProductDetail = ({
                 <section className="product-specifications">
                   <h2>Ad details</h2>
                   <dl>
-                    {facts.map((fact, index) => (
-                      <div key={fact}>
-                        <dt>{fact}</dt>
-                        <dd>
-                          {
-                            [
-                              listing.tag,
-                              listing.detail || "See description",
-                              "Available now",
-                              listing.location,
-                              listing.postedTime,
-                              "Private seller",
-                            ][index]
-                          }
-                        </dd>
-                      </div>
-                    ))}
+                    {listingSpecifications.length > 0
+                      ? listingSpecifications.map(([label, value]) => (
+                          <div key={label}>
+                            <dt>{label}</dt>
+                            <dd>{value}</dd>
+                          </div>
+                        ))
+                      : facts.map((fact, index) => (
+                          <div key={fact}>
+                            <dt>{fact}</dt>
+                            <dd>
+                              {
+                                [
+                                  listing.tag,
+                                  listing.detail || "See description",
+                                  "Available now",
+                                  listing.location,
+                                  listing.postedTime,
+                                  "Private seller",
+                                ][index]
+                              }
+                            </dd>
+                          </div>
+                        ))}
                   </dl>
                 </section>
                 <div className="product-safety-note">
@@ -323,37 +361,48 @@ const ProductDetail = ({
               </div>
               <div className="seller-identity">
                 <div className="seller-avatar">
-                  {listing.tag === "Real Estate" ? "P" : "S"}
+                  {sellerName.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h2>
-                    {listing.tag === "Real Estate"
-                      ? "Property Partner"
-                      : "DubaiZA Seller"}
-                  </h2>
+                  <h2>{sellerName}</h2>
                   <p>
                     <Check size={13} />
                     Member since 2024
                   </p>
                 </div>
               </div>
-              <button
-                className="seller-contact-primary"
-                onClick={() => setChatOpen(true)}
-              >
-                <MessageCircle size={18} />
-                Chat with seller
-              </button>
-              <button
-                className="seller-contact-secondary"
-                onClick={() => {
-                  setIsCalling(false);
-                  setCallOpen(true);
-                }}
-              >
-                <Phone size={17} />
-                Show phone number
-              </button>
+              {contactMethods.includes("Chat") && (
+                <button
+                  className="seller-contact-primary"
+                  onClick={() => setChatOpen(true)}
+                >
+                  <MessageCircle size={18} />
+                  Chat with seller
+                </button>
+              )}
+              {contactMethods.includes("WhatsApp") && (
+                <a
+                  className="seller-contact-secondary"
+                  href={sellerWhatsAppHref}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <MessageCircle size={17} />
+                  WhatsApp seller
+                </a>
+              )}
+              {contactMethods.includes("Phone") && (
+                <button
+                  className="seller-contact-secondary"
+                  onClick={() => {
+                    setIsCalling(false);
+                    setCallOpen(true);
+                  }}
+                >
+                  <Phone size={17} />
+                  Show phone number
+                </button>
+              )}
               <div className="seller-response">
                 <span className="seller-online-dot" />
                 Usually responds within a few hours
@@ -414,13 +463,11 @@ const ProductDetail = ({
           >
             <header className="seller-chat-header">
               <div className="seller-chat-avatar">
-                {listing.tag === "Real Estate" ? "P" : "S"}
+                {sellerName.charAt(0).toUpperCase()}
               </div>
               <div className="seller-chat-heading">
                 <h2 id="seller-chat-title">
-                  {listing.tag === "Real Estate"
-                    ? "Property Partner"
-                    : "DubaiZA Seller"}
+                  {sellerName}
                 </h2>
                 <p>
                   <span />
@@ -512,12 +559,10 @@ const ProductDetail = ({
               {isCalling ? "Calling seller..." : "Call the seller"}
             </h2>
             <p className="call-seller-name">
-              {listing.tag === "Real Estate"
-                ? "Property Partner"
-                : "DubaiZA Seller"}
+              {sellerName}
             </p>
-            <a className="seller-phone-number" href="tel:+971501234567">
-              +971 50 123 4567
+            <a className="seller-phone-number" href={sellerPhoneHref}>
+              {sellerPhone}
             </a>
             <p className="call-demo-note">
               Demo call · No call is placed from this page
@@ -537,7 +582,7 @@ const ProductDetail = ({
             ) : (
               <a
                 className="start-demo-call"
-                href="tel:+971501234567"
+                href={sellerPhoneHref}
                 onClick={(event) => {
                   event.preventDefault();
                   setIsCalling(true);
