@@ -74,6 +74,7 @@ const App = () => {
         setLogin={setLogin}
         setRegister={setRegister}
         onPostAd={() => navigate("/post-ad")}
+        onSearch={handleSearch}
         onCategorySelect={handleCategorySelect}
         category={category}
         currentUser={currentUser}

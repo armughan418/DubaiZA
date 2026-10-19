@@ -4,14 +4,26 @@ import "./NavbarMarketplace.css";
 import "./NavbarReference.css";
 import {
   Bell,
+  BriefcaseBusiness,
+  CarFront,
   ChevronDown,
+  ChevronRight,
   Globe,
   Heart,
+  House,
+  Languages,
   MapPin,
   Menu,
   MessageCircle,
   Plus,
+  Search,
+  Smartphone,
+  Tags,
+  UserRound,
+  UsersRound,
+  Wrench,
   X,
+  Building2,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -26,6 +38,18 @@ const categories = [
   "Classifieds",
   "Community",
 ];
+
+const mobileCategoryIcons = {
+  Motors: CarFront,
+  Property: House,
+  Jobs: BriefcaseBusiness,
+  Electronics: Smartphone,
+  "Furniture & Garden": House,
+  "Mobile Phones": Smartphone,
+  Services: Wrench,
+  Classifieds: Tags,
+  Community: UsersRound,
+};
 
 const megaMenus = {
   Motors: [
@@ -281,9 +305,13 @@ const Navbar = ({
   category = "All",
   currentUser,
   onLogout,
+  onSearch,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openCategory, setOpenCategory] = useState(null);
+  const [mobileExpandedCategory, setMobileExpandedCategory] = useState(null);
+  const [mobileSearchTerm, setMobileSearchTerm] = useState("");
+  const [mobileLanguage, setMobileLanguage] = useState("English");
   const closeCategoryTimer = useRef(null);
   const navigate = useNavigate();
   const chooseCategory = (item) => {
@@ -303,6 +331,34 @@ const Navbar = ({
   const scheduleCategoryClose = () => {
     clearTimeout(closeCategoryTimer.current);
     closeCategoryTimer.current = setTimeout(() => setOpenCategory(null), 320);
+  };
+  const focusSearch = () => {
+    setMenuOpen(false);
+    if (window.location.pathname !== "/") {
+      navigate("/");
+      window.setTimeout(() => {
+        document.getElementById("hero-search")?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 0);
+      return;
+    }
+
+    const search = document.getElementById("hero-search");
+    search?.scrollIntoView({ behavior: "smooth", block: "center" });
+    search?.querySelector("input")?.focus({ preventScroll: true });
+  };
+  const submitMobileSearch = (event) => {
+    event.preventDefault();
+    onCategorySelect("All");
+    onSearch(mobileSearchTerm.trim(), "All Cities");
+    navigate("/");
+    setMenuOpen(false);
+  };
+  const openAuth = (showAuth) => {
+    setMenuOpen(false);
+    showAuth(true);
   };
 
   return (
@@ -408,6 +464,7 @@ const Navbar = ({
         <button
           className="hamburger"
           aria-label="Open menu"
+          aria-expanded={menuOpen}
           onClick={() => setMenuOpen(true)}
         >
           <Menu size={28} />
@@ -502,48 +559,53 @@ const Navbar = ({
 
       {/* Mobile menu overlay */}
       {menuOpen && (
-        <div className="mobile-menu-overlay" onClick={() => setMenuOpen(false)}>
-          <div className="mobile-menu" onClick={(e) => e.stopPropagation()}>
-            <button className="close-menu" onClick={() => setMenuOpen(false)}>
-              <X size={26} />
-            </button>
+        <div
+          className="mobile-menu-overlay"
+          onClick={() => setMenuOpen(false)}
+        >
+          <div
+            className="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="DubaiZA menu"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mobile-menu-header">
+              <Link
+                className="brand-link"
+                to="/"
+                aria-label="DubaiZA home"
+                onClick={() => setMenuOpen(false)}
+              >
+                <div className="logo">
+                  <p>D</p>
+                  <h1>
+                    Dubai<span>ZA</span>
+                  </h1>
+                </div>
+              </Link>
+              <button
+                className="close-menu"
+                type="button"
+                aria-label="Close menu"
+                onClick={() => setMenuOpen(false)}
+              >
+                <X size={22} />
+              </button>
+            </div>
 
-            <ul>
-              <li>
-                <button onClick={() => chooseCategory("All")}>
-                  All categories
-                </button>
-              </li>
-              <li>
-                <Link to="/" onClick={() => setMenuOpen(false)}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/electronics" onClick={() => setMenuOpen(false)}>
-                  Electronics
-                </Link>
-              </li>
-              <li>
-                <Link to="/furniture-garden" onClick={() => setMenuOpen(false)}>
-                  Furniture & Garden
-                </Link>
-              </li>
-              {categories.map((item) => (
-                <li key={item}>
-                  <button onClick={() => chooseCategory(item)}>{item}</button>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mobile-menu-buttons">
-              {currentUser ? (
-                <>
-                  <p className="mobile-signed-in">
-                    Signed in as <strong>{currentUser.name}</strong>
-                  </p>
+            <div className="mobile-menu-content">
+              <section className="mobile-menu-welcome">
+                <div className="mobile-menu-welcome-title">
+                  <UserRound size={19} />
+                  <strong>
+                    {currentUser ? `Welcome, ${currentUser.name}!` : "Welcome Guest!"}
+                  </strong>
+                </div>
+                {currentUser ? (
                   <button
-                    className="loginBtn"
+                    className="mobile-menu-logout"
+                    type="button"
                     onClick={() => {
                       onLogout();
                       setMenuOpen(false);
@@ -551,43 +613,186 @@ const Navbar = ({
                   >
                     Log out
                   </button>
-                </>
-              ) : (
-                <>
+                ) : (
+                  <div className="mobile-menu-auth">
+                    <button
+                      type="button"
+                      onClick={() => openAuth(setLogin)}
+                    >
+                      Log In
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => openAuth(setRegister)}
+                    >
+                      Register
+                    </button>
+                  </div>
+                )}
+              </section>
+
+              <section className="mobile-language" aria-label="Language">
+                <span>
+                  <Languages size={17} />
+                  Language
+                </span>
+                <div>
+                  {["English", "العربية"].map((language) => (
+                    <button
+                      className={mobileLanguage === language ? "active" : ""}
+                      type="button"
+                      key={language}
+                      aria-pressed={mobileLanguage === language}
+                      onClick={() => setMobileLanguage(language)}
+                    >
+                      {language}
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <form
+                className="mobile-menu-search"
+                role="search"
+                onSubmit={submitMobileSearch}
+              >
+                <Search size={19} aria-hidden="true" />
+                <input
+                  type="search"
+                  aria-label="Search listings"
+                  placeholder="Search for anything..."
+                  value={mobileSearchTerm}
+                  onChange={(event) => setMobileSearchTerm(event.target.value)}
+                />
+              </form>
+
+              <section className="mobile-browse">
+                <div className="mobile-browse-heading">
+                  <h2>Browse Categories</h2>
                   <button
-                    className="loginBtn"
-                    onClick={() => {
-                      setLogin(true);
-                      setMenuOpen(false);
-                    }}
+                    type="button"
+                    onClick={() => chooseCategory("All")}
                   >
-                    Login
+                    View all
                   </button>
-                  <button
-                    className="registerBtn"
-                    onClick={() => {
-                      setRegister(true);
-                      setMenuOpen(false);
-                    }}
-                  >
-                    Register
-                  </button>
-                </>
-              )}
+                </div>
+                <ul>
+                  {categories.map((item) => {
+                    const Icon = mobileCategoryIcons[item] || Building2;
+                    const isExpanded = mobileExpandedCategory === item;
+                    return (
+                      <li key={item}>
+                        <div className="mobile-category-row">
+                          <button
+                            className="mobile-category-select"
+                            type="button"
+                            onClick={() => chooseCategory(item)}
+                          >
+                            <span className="mobile-category-icon">
+                              <Icon size={18} />
+                            </span>
+                            <span>{item}</span>
+                          </button>
+                          <button
+                            className="mobile-category-expand"
+                            type="button"
+                            aria-label={`${isExpanded ? "Collapse" : "Expand"} ${item}`}
+                            aria-expanded={isExpanded}
+                            onClick={() =>
+                              setMobileExpandedCategory(
+                                isExpanded ? null : item,
+                              )
+                            }
+                          >
+                            <ChevronRight
+                              size={18}
+                              className={isExpanded ? "expanded" : ""}
+                            />
+                          </button>
+                        </div>
+                        {isExpanded && (
+                          <div className="mobile-category-subcategories">
+                            {megaMenus[item].map((group) => (
+                              <section key={group.title}>
+                                <h3>{group.title}</h3>
+                                <div>
+                                  {group.items.map((entry) => (
+                                    <button
+                                      type="button"
+                                      key={entry}
+                                      onClick={() => chooseCategory(item)}
+                                    >
+                                      {entry}
+                                    </button>
+                                  ))}
+                                </div>
+                              </section>
+                            ))}
+                          </div>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+
               <button
-                className="postBtn"
+                className="mobile-menu-post-ad"
+                type="button"
                 onClick={() => {
                   onPostAd();
                   setMenuOpen(false);
                 }}
               >
-                <Plus size={22} />
-                Post Ad
+                <Plus size={19} />
+                Post an Ad
               </button>
             </div>
           </div>
         </div>
       )}
+
+      <nav className="mobile-bottom-nav" aria-label="Quick navigation">
+        <Link className="mobile-bottom-nav-item" to="/" aria-label="Home">
+          <House size={21} />
+          <span>Home</span>
+        </Link>
+        <button
+          className="mobile-bottom-nav-item"
+          type="button"
+          onClick={focusSearch}
+        >
+          <Search size={21} />
+          <span>Search</span>
+        </button>
+        <button
+          className="mobile-bottom-nav-item mobile-bottom-nav-sell"
+          type="button"
+          aria-label="Sell an item"
+          onClick={onPostAd}
+        >
+          <span className="mobile-bottom-nav-sell-icon">
+            <Plus size={29} />
+          </span>
+          <span>Sell</span>
+        </button>
+        <button
+          className="mobile-bottom-nav-item"
+          type="button"
+          onClick={() => setLogin(true)}
+        >
+          <MessageCircle size={21} />
+          <span>Chat</span>
+        </button>
+        <button
+          className="mobile-bottom-nav-item"
+          type="button"
+          onClick={() => setLogin(true)}
+        >
+          <UserRound size={21} />
+          <span>Profile</span>
+        </button>
+      </nav>
     </header>
   );
 };

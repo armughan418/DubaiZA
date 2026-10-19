@@ -54,7 +54,11 @@ const Hero = ({
                 </button>
               ))}
             </div>
-            <form className="search-input" onSubmit={submitSearch}>
+            <form
+              className="search-input"
+              id="hero-search"
+              onSubmit={submitSearch}
+            >
               <label className="hero-query">
                 <Search size={19} />
                 <input
