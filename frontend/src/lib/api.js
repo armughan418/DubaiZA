@@ -1,4 +1,8 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL;
+
+if (!API_URL) {
+  throw new Error("VITE_API_URL is missing. Set it in frontend/.env.");
+}
 
 export const apiRequest = async (path, options = {}) => {
   const headers = new Headers(options.headers || {});

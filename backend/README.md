@@ -14,8 +14,8 @@ FRONTEND_URL=http://localhost:5173
 Keep the database URL and token secret private. For a frontend and API on
 different sites, set `COOKIE_SAME_SITE=None` and use HTTPS in production.
 `FRONTEND_URL` may contain comma-separated allowed frontend origins.
-When the API is not at `http://localhost:5000`, set the frontend's
-`VITE_API_URL` to the API URL ending in `/api`.
+Set `VITE_API_URL` in `frontend/.env` to the API URL ending in `/api`.
+Use `frontend/.env.example` as the template when setting up the frontend.
 
 Run the API from this directory with `npm run dev`.
 
