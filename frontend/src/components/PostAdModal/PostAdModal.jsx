@@ -122,7 +122,7 @@ const readImage = (file) =>
     reader.readAsDataURL(file);
   });
 
-const PostAdModal = ({ onPublish }) => {
+const PostAdModal = ({ onPublish, currentUser }) => {
   const [step, setStep] = useState(0);
   const [category, setCategory] = useState("");
   const [details, setDetails] = useState({
@@ -136,9 +136,9 @@ const PostAdModal = ({ onPublish }) => {
   const [photos, setPhotos] = useState([]);
   const [location, setLocation] = useState({ emirate: "", area: "" });
   const [reach, setReach] = useState({
-    name: "",
+    name: currentUser?.name || "",
     phone: "",
-    email: "",
+    email: currentUser?.email || "",
     contactMethods: ["Chat"],
   });
   const [error, setError] = useState("");
@@ -174,10 +174,22 @@ const PostAdModal = ({ onPublish }) => {
       return;
     }
     const invalidFile = selectedFiles.find(
-      (file) => !file.type.startsWith("image/") || file.size > 10 * 1024 * 1024,
+      (file) =>
+        !["image/jpeg", "image/png", "image/webp", "image/gif"].includes(
+          file.type,
+        ) ||
+        file.size > 10 * 1024 * 1024,
     );
     if (invalidFile) {
-      setError("Choose image files up to 10 MB each.");
+      setError("Choose JPEG, PNG, WEBP, or GIF images up to 10 MB each.");
+      return;
+    }
+    const selectedSize = [...photos, ...selectedFiles].reduce(
+      (total, photo) => total + (photo.file || photo).size,
+      0,
+    );
+    if (selectedSize > 10 * 1024 * 1024) {
+      setError("The combined size of your listing photos must be 10 MB or less.");
       return;
     }
     const newPhotos = selectedFiles.map((file) => {
@@ -268,7 +280,7 @@ const PostAdModal = ({ onPublish }) => {
         .map(([label, value]) => `${label}: ${value}`)
         .join(" · ");
       const listing = {
-        id: Date.now(),
+        category,
         image: images[0],
         images,
         tag: category === "Property" ? "Real Estate" : category,
@@ -278,7 +290,7 @@ const PostAdModal = ({ onPublish }) => {
         detail: detail || category,
         year: specs.Year || new Date().getFullYear().toString(),
         location: `${location.area.trim()}, ${location.emirate}`,
-        price: Number(details.price).toLocaleString("en-US"),
+        price: Number(details.price),
         priceUnit: details.priceUnit,
         specifications: specs,
         contact: {
@@ -288,7 +300,7 @@ const PostAdModal = ({ onPublish }) => {
           methods: reach.contactMethods,
         },
       };
-      onPublish(listing);
+      await onPublish(listing);
     } catch (publishError) {
       setError(
         publishError instanceof Error
@@ -524,10 +536,10 @@ const PostAdModal = ({ onPublish }) => {
                       <Camera size={24} />
                     </span>
                     <strong>Click to upload or drag and drop</strong>
-                    <span>PNG, JPG or WEBP (up to 10 MB each)</span>
+                    <span>JPEG, PNG, WEBP or GIF (up to 10 MB each; 10 MB total)</span>
                     <input
                       ref={fileInputRef}
-                      accept="image/*"
+                      accept="image/jpeg,image/png,image/webp,image/gif"
                       aria-label="Upload listing photos"
                       className="photo-file-input"
                       multiple

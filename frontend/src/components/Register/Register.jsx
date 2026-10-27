@@ -1,26 +1,32 @@
+import { useState } from "react";
 import "../AuthModal.css";
 import { Check, X } from "lucide-react";
-import { FaApple } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+import { apiRequest } from "../../lib/api";
 
 const Register = ({ setRegister, onAuthenticate }) => {
-  const handleSubmit = (event) => {
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const name = String(form.get("name") || "").trim() || "User";
-    const email = String(form.get("email") || "").trim();
-    onAuthenticate({ name, email, provider: "Email" });
-  };
-
-  const continueWith = (provider) => {
-    onAuthenticate({
-      name: provider === "Google" ? "Google User" : "Apple User",
-      email:
-        provider === "Google"
-          ? "google.user@example.com"
-          : "apple.user@example.com",
-      provider,
-    });
+    setError("");
+    setIsSubmitting(true);
+    try {
+      const result = await apiRequest("/auth/register", {
+        method: "POST",
+        body: {
+          fullName: String(form.get("name") || "").trim(),
+          email: String(form.get("email") || "").trim(),
+          password: String(form.get("password") || ""),
+        },
+      });
+      onAuthenticate(result);
+    } catch (registerError) {
+      setError(registerError.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -63,24 +69,16 @@ const Register = ({ setRegister, onAuthenticate }) => {
               </span>
             </div>
             <div className="left-tags">
-              <div className="tag">
-                <span>
-                  <Check size={20} />
-                </span>
-                <h5>Verified Sellers</h5>
-              </div>
-              <div className="tag">
-                <span>
-                  <Check size={20} />
-                </span>
-                <h5>Secure Chat</h5>
-              </div>
-              <div className="tag">
-                <span>
-                  <Check size={20} />
-                </span>
-                <h5>Smart AI Search</h5>
-              </div>
+              {["Verified Sellers", "Secure Chat", "Smart AI Search"].map(
+                (label) => (
+                  <div className="tag" key={label}>
+                    <span>
+                      <Check size={20} />
+                    </span>
+                    <h5>{label}</h5>
+                  </div>
+                ),
+              )}
             </div>
           </div>
           <div className="register-right">
@@ -88,53 +86,59 @@ const Register = ({ setRegister, onAuthenticate }) => {
               <h1 id="register-heading">Create Account</h1>
               <p>Join DubaiZA to buy and sell across the UAE</p>
             </div>
-            <div className="social-btn">
-              <button
-                className="google"
-                type="button"
-                onClick={() => continueWith("Google")}
-              >
-                <FcGoogle size={20} aria-hidden="true" />
-                Continue with Google
-              </button>
-              <button
-                className="apple"
-                type="button"
-                onClick={() => continueWith("Apple")}
-              >
-                <FaApple size={20} aria-hidden="true" />
-                Continue with Apple
-              </button>
-            </div>
             <h5>
-              <span>Or continue with</span>
+              <span>Register with email</span>
             </h5>
             <form className="auth-form" onSubmit={handleSubmit}>
               <div className="input-wrapper">
                 <div className="input-box">
                   <label htmlFor="register-name">Full name</label>
                   <input
+                    autoComplete="name"
                     id="register-name"
+                    maxLength={80}
+                    minLength={2}
                     name="name"
+                    required
                     type="text"
-                    placeholder="Enter any name"
+                    placeholder="Your full name"
                   />
                 </div>
                 <div className="input-box">
                   <label htmlFor="register-email">Email</label>
                   <input
+                    autoComplete="email"
                     id="register-email"
                     name="email"
-                    type="text"
-                    placeholder="Enter anything"
+                    required
+                    type="email"
+                    placeholder="you@example.com"
+                  />
+                </div>
+                <div className="input-box">
+                  <label htmlFor="register-password">Password</label>
+                  <input
+                    autoComplete="new-password"
+                    id="register-password"
+                    maxLength={72}
+                    minLength={8}
+                    name="password"
+                    required
+                    type="password"
+                    placeholder="At least 8 characters"
                   />
                 </div>
               </div>
-              <button className="auth-submit" type="submit">
-                Create account
+              {error && (
+                <p className="auth-error" role="alert">
+                  {error}
+                </p>
+              )}
+              <button className="auth-submit" disabled={isSubmitting} type="submit">
+                {isSubmitting ? "Creating account..." : "Create account"}
               </button>
               <p className="auth-demo-note">
-                Demo registration · No account details are saved
+                Your password is encrypted before it is stored.
               </p>
             </form>
           </div>

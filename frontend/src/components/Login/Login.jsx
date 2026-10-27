@@ -1,26 +1,31 @@
+import { useState } from "react";
 import "../AuthModal.css";
 import { Check, X } from "lucide-react";
-import { FaApple } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+import { apiRequest } from "../../lib/api";
 
 const Login = ({ setLogin, onAuthenticate }) => {
-  const handleSubmit = (event) => {
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const email = String(form.get("email") || "").trim();
-    const name = email.split("@")[0] || "User";
-    onAuthenticate({ name, email, provider: "Email" });
-  };
-
-  const continueWith = (provider) => {
-    onAuthenticate({
-      name: provider === "Google" ? "Google User" : "Apple User",
-      email:
-        provider === "Google"
-          ? "google.user@example.com"
-          : "apple.user@example.com",
-      provider,
-    });
+    setError("");
+    setIsSubmitting(true);
+    try {
+      const result = await apiRequest("/auth/login", {
+        method: "POST",
+        body: {
+          email: String(form.get("email") || "").trim(),
+          password: String(form.get("password") || ""),
+        },
+      });
+      onAuthenticate(result);
+    } catch (loginError) {
+      setError(loginError.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -63,78 +68,62 @@ const Login = ({ setLogin, onAuthenticate }) => {
               </span>
             </div>
             <div className="left-tags">
-              <div className="tag">
-                <span>
-                  <Check size={20} />
-                </span>
-                <h5>Verified Sellers</h5>
-              </div>
-              <div className="tag">
-                <span>
-                  <Check size={20} />
-                </span>
-                <h5>Secure Chat</h5>
-              </div>
-              <div className="tag">
-                <span>
-                  <Check size={20} />
-                </span>
-                <h5>Smart AI Search</h5>
-              </div>
+              {["Verified Sellers", "Secure Chat", "Smart AI Search"].map(
+                (label) => (
+                  <div className="tag" key={label}>
+                    <span>
+                      <Check size={20} />
+                    </span>
+                    <h5>{label}</h5>
+                  </div>
+                ),
+              )}
             </div>
           </div>
           <div className="login-right">
             <div className="right-text">
               <h1 id="login-heading">Welcome Back</h1>
-              <p>Enter any details to continue</p>
-            </div>
-            <div className="social-btn">
-              <button
-                className="google"
-                type="button"
-                onClick={() => continueWith("Google")}
-              >
-                <FcGoogle size={20} aria-hidden="true" />
-                Continue with Google
-              </button>
-              <button
-                className="apple"
-                type="button"
-                onClick={() => continueWith("Apple")}
-              >
-                <FaApple size={20} aria-hidden="true" />
-                Continue with Apple
-              </button>
+              <p>Sign in to manage your DubaiZA account</p>
             </div>
             <h5>
-              <span>Or continue with</span>
+              <span>Continue with email</span>
             </h5>
             <form className="auth-form" onSubmit={handleSubmit}>
               <div className="input-wrapper">
                 <div className="input-box">
-                  <label htmlFor="login-email">Email or username</label>
+                  <label htmlFor="login-email">Email</label>
                   <input
+                    autoComplete="email"
                     id="login-email"
                     name="email"
-                    type="text"
-                    placeholder="Enter anything"
+                    required
+                    type="email"
+                    placeholder="you@example.com"
                   />
                 </div>
                 <div className="input-box">
                   <label htmlFor="login-password">Password</label>
                   <input
+                    autoComplete="current-password"
                     id="login-password"
+                    minLength={8}
                     name="password"
+                    required
                     type="password"
-                    placeholder="Enter anything"
+                    placeholder="Enter your password"
                   />
                 </div>
               </div>
-              <button className="auth-submit" type="submit">
-                Log in
+              {error && (
+                <p className="auth-error" role="alert">
+                  {error}
+                </p>
+              )}
+              <button className="auth-submit" disabled={isSubmitting} type="submit">
+                {isSubmitting ? "Signing in..." : "Log in"}
               </button>
               <p className="auth-demo-note">
-                Demo sign-in · No account or password check
+                Your account and listings are stored securely.
               </p>
             </form>
           </div>

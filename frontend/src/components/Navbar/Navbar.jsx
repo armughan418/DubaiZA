@@ -431,6 +431,9 @@ const Navbar = ({
                 {currentUser.name.charAt(0).toUpperCase()}
               </span>
               <strong>{currentUser.name}</strong>
+              <Link className="nav-auth-button nav-account-link" to="/my-listings">
+                My ads
+              </Link>
               <button className="nav-auth-button" onClick={onLogout}>
                 Log out
               </button>
@@ -603,16 +606,25 @@ const Navbar = ({
                   </strong>
                 </div>
                 {currentUser ? (
-                  <button
-                    className="mobile-menu-logout"
-                    type="button"
-                    onClick={() => {
-                      onLogout();
-                      setMenuOpen(false);
-                    }}
-                  >
-                    Log out
-                  </button>
+                  <>
+                    <Link
+                      className="mobile-menu-account"
+                      to="/my-listings"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      My ads and profile
+                    </Link>
+                    <button
+                      className="mobile-menu-logout"
+                      type="button"
+                      onClick={() => {
+                        onLogout();
+                        setMenuOpen(false);
+                      }}
+                    >
+                      Log out
+                    </button>
+                  </>
                 ) : (
                   <div className="mobile-menu-auth">
                     <button
