@@ -223,7 +223,7 @@ const App = () => {
         <Login setLogin={setLogin} onAuthenticate={authenticateUser} />
       )}
       {showRegister && (
-        <Register setRegister={setRegister} onAuthenticate={authenticateUser} />
+        <Register setRegister={setRegister} setLogin={setLogin} />
       )}
     </>
   );

@@ -3,8 +3,9 @@ import "../AuthModal.css";
 import { Check, X } from "lucide-react";
 import { apiRequest } from "../../lib/api";
 
-const Register = ({ setRegister, onAuthenticate }) => {
+const Register = ({ setRegister, setLogin }) => {
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -13,7 +14,7 @@ const Register = ({ setRegister, onAuthenticate }) => {
     setError("");
     setIsSubmitting(true);
     try {
-      const result = await apiRequest("/auth/register", {
+      await apiRequest("/auth/register", {
         method: "POST",
         body: {
           fullName: String(form.get("name") || "").trim(),
@@ -21,7 +22,7 @@ const Register = ({ setRegister, onAuthenticate }) => {
           password: String(form.get("password") || ""),
         },
       });
-      onAuthenticate(result);
+      setSuccess(true);
     } catch (registerError) {
       setError(registerError.message);
     } finally {
@@ -83,64 +84,89 @@ const Register = ({ setRegister, onAuthenticate }) => {
           </div>
           <div className="register-right">
             <div className="right-text">
-              <h1 id="register-heading">Create Account</h1>
-              <p>Join DubaiZA to buy and sell across the UAE</p>
-            </div>
-            <h5>
-              <span>Register with email</span>
-            </h5>
-            <form className="auth-form" onSubmit={handleSubmit}>
-              <div className="input-wrapper">
-                <div className="input-box">
-                  <label htmlFor="register-name">Full name</label>
-                  <input
-                    autoComplete="name"
-                    id="register-name"
-                    maxLength={80}
-                    minLength={2}
-                    name="name"
-                    required
-                    type="text"
-                    placeholder="Your full name"
-                  />
-                </div>
-                <div className="input-box">
-                  <label htmlFor="register-email">Email</label>
-                  <input
-                    autoComplete="email"
-                    id="register-email"
-                    name="email"
-                    required
-                    type="email"
-                    placeholder="you@example.com"
-                  />
-                </div>
-                <div className="input-box">
-                  <label htmlFor="register-password">Password</label>
-                  <input
-                    autoComplete="new-password"
-                    id="register-password"
-                    maxLength={72}
-                    minLength={8}
-                    name="password"
-                    required
-                    type="password"
-                    placeholder="At least 8 characters"
-                  />
-                </div>
-              </div>
-              {error && (
-                <p className="auth-error" role="alert">
-                  {error}
-                </p>
-              )}
-              <button className="auth-submit" disabled={isSubmitting} type="submit">
-                {isSubmitting ? "Creating account..." : "Create account"}
-              </button>
-              <p className="auth-demo-note">
-                Your password is encrypted before it is stored.
+              <h1 id="register-heading">
+                {success ? "Account Created" : "Create Account"}
+              </h1>
+              <p>
+                {success
+                  ? "Your account is ready. Log in to continue."
+                  : "Join DubaiZA to buy and sell across the UAE"}
               </p>
-            </form>
+            </div>
+            {success ? (
+              <button
+                className="auth-submit"
+                type="button"
+                onClick={() => {
+                  setRegister(false);
+                  setLogin(true);
+                }}
+              >
+                Go to login
+              </button>
+            ) : (
+              <>
+                <h5>
+                <span>Register with email</span>
+                </h5>
+                <form className="auth-form" onSubmit={handleSubmit}>
+                <div className="input-wrapper">
+                  <div className="input-box">
+                    <label htmlFor="register-name">Full name</label>
+                    <input
+                      autoComplete="name"
+                      id="register-name"
+                      maxLength={80}
+                      minLength={2}
+                      name="name"
+                      required
+                      type="text"
+                      placeholder="Your full name"
+                    />
+                  </div>
+                  <div className="input-box">
+                    <label htmlFor="register-email">Email</label>
+                    <input
+                      autoComplete="email"
+                      id="register-email"
+                      name="email"
+                      required
+                      type="email"
+                      placeholder="you@example.com"
+                    />
+                  </div>
+                  <div className="input-box">
+                    <label htmlFor="register-password">Password</label>
+                    <input
+                      autoComplete="new-password"
+                      id="register-password"
+                      maxLength={72}
+                      minLength={8}
+                      name="password"
+                      required
+                      type="password"
+                      placeholder="At least 8 characters"
+                    />
+                  </div>
+                </div>
+                {error && (
+                  <p className="auth-error" role="alert">
+                    {error}
+                  </p>
+                )}
+                <button
+                  className="auth-submit"
+                  disabled={isSubmitting}
+                  type="submit"
+                >
+                  {isSubmitting ? "Creating account..." : "Create account"}
+                </button>
+                <p className="auth-demo-note">
+                  Your password is encrypted before it is stored.
+                </p>
+                </form>
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -38,8 +38,10 @@ router.post("/register", async (req, res, next) => {
 
     const passwordHash = await bcrypt.hash(password, 12);
     const user = await User.create({ fullName, email, password: passwordHash });
-    res.cookie("dubaiza_session", signToken(user._id), cookieOptions);
-    return res.status(201).json({ user: publicUser(user) });
+    return res.status(201).json({
+      message: "Account created. Please log in.",
+      user: publicUser(user),
+    });
   } catch (error) {
     if (error.code === 11000) {
       return res.status(409).json({ message: "An account with this email already exists." });
