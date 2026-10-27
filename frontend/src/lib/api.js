@@ -16,7 +16,16 @@ export const apiRequest = async (path, options = {}) => {
     body:
       options.body === undefined ? undefined : JSON.stringify(options.body),
   });
-  const data = await response.json();
+  const responseText = await response.text();
+  let data;
+
+  try {
+    data = JSON.parse(responseText);
+  } catch {
+    throw new Error(
+      `Backend returned an unexpected response (${response.status}). Check VITE_API_URL in frontend/.env.`,
+    );
+  }
 
   if (!response.ok) {
     const error = new Error(

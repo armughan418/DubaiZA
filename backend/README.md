@@ -14,11 +14,9 @@ FRONTEND_URL=http://localhost:5173
 Keep the database URL and token secret private. For a frontend and API on
 different sites, set `COOKIE_SAME_SITE=None` and use HTTPS in production.
 `FRONTEND_URL` may contain comma-separated allowed frontend origins.
-For local development, set `VITE_API_URL=/api` and
-`VITE_API_PROXY_TARGET=http://localhost:5000` in `frontend/.env`. The Vite proxy
-keeps API requests and the login cookie on the same origin. For deployment
-without that proxy, set `VITE_API_URL` to the backend URL ending in `/api` and
-configure the cookie and `FRONTEND_URL` for the deployed domains.
+Set `VITE_API_URL` in `frontend/.env` to the backend URL ending in `/api`.
+For local development, use `http://localhost:5000/api`. For deployment, use
+the deployed backend URL and add the frontend origin to `FRONTEND_URL`.
 Use `frontend/.env.example` as the setup template.
 
 Run the API from this directory with `npm run dev`.
