@@ -13,12 +13,12 @@ import MyListings from "./pages/MyListings";
 import { listings as sampleListings } from "./pages/marketplaceData";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { apiRequest } from "./lib/api";
+import { Toaster, toast } from "react-hot-toast";
 
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentUser, setCurrentUser] = useState(null);
-  const [appError, setAppError] = useState("");
   const [postedListings, setPostedListings] = useState([]);
   const [showLogin, setLogin] = useState(false);
   const [showRegister, setRegister] = useState(false);
@@ -39,7 +39,7 @@ const App = () => {
         if (session) setCurrentUser(session.user);
       })
       .catch((error) => {
-        if (active) setAppError(`Could not connect to DubaiZA: ${error.message}`);
+        if (active) toast.error(`Could not connect to DubaiZA: ${error.message}`);
       });
     return () => {
       active = false;
@@ -68,15 +68,16 @@ const App = () => {
   };
   const authenticateUser = ({ user }) => {
     setCurrentUser(user);
-    setAppError("");
+    toast.success("You are now logged in.");
     setLogin(false);
     setRegister(false);
   };
   const logout = async () => {
     try {
       await apiRequest("/auth/logout", { method: "POST" });
+      toast.success("You have logged out.");
     } catch (error) {
-      setAppError(`Could not sign out: ${error.message}`);
+      toast.error(`Could not sign out: ${error.message}`);
     } finally {
       setCurrentUser(null);
     }
@@ -105,20 +106,23 @@ const App = () => {
     ]);
     setCategory("All");
     handleSearch("", "All Cities");
+    toast.success("Your ad has been published.");
     navigate("/");
     return post;
   };
   const allListings = [...postedListings, ...sampleListings];
   return (
     <>
-      {appError && (
-        <div className="app-error-banner" role="alert">
-          <span>{appError}</span>
-          <button type="button" onClick={() => setAppError("")}>
-            Dismiss
-          </button>
-        </div>
-      )}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            borderRadius: "10px",
+            fontFamily: "Outfit, sans-serif",
+          },
+        }}
+      />
       <Navbar
         setLogin={setLogin}
         setRegister={setRegister}

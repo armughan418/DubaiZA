@@ -253,13 +253,6 @@
   opacity: 0.7;
 }
 
-:is(.login-page, .register-page) .auth-error {
-  margin: 0;
-  color: #b42318;
-  font-size: 0.85rem;
-  line-height: 1.4;
-}
-
 :is(.login-page, .register-page) .auth-demo-note {
   color: #78828c;
   font-size: 0.68rem;

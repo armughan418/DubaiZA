@@ -4,28 +4,6 @@
   background: #f7f8fa;
 }
 
-.app-error-banner {
-  position: relative;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.7rem 1rem;
-  color: #812018;
-  background: #fff0ee;
-  font-size: 0.85rem;
-}
-
-.app-error-banner button {
-  border: 0;
-  color: inherit;
-  background: transparent;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
 .account-sign-in-required {
   display: grid;
   min-height: 55vh;
@@ -297,23 +275,6 @@
 .account-listings-state a {
   color: #c6191e;
   font-weight: 700;
-}
-
-.my-listings-message {
-  margin: 1rem 0;
-  padding: 0.8rem 1rem;
-  border-radius: 7px;
-  font-size: 0.9rem;
-}
-
-.my-listings-message.is-error {
-  color: #9c2018;
-  background: #fff0ee;
-}
-
-.my-listings-message.is-success {
-  color: #20623a;
-  background: #edf8f0;
 }
 
 .listing-edit-overlay {

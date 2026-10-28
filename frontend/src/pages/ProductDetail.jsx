@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import {
   ArrowLeft,
   ArrowRight,
@@ -132,14 +133,12 @@ const ProductDetail = ({
       : null) ||
     getCachedListing(listingId);
 
+  useEffect(() => {
+    if (!listing) toast.error("This listing could not be found.");
+  }, [listing]);
+
   if (!listing) {
-    return (
-      <main className="product-not-found">
-        <h1>Listing not found</h1>
-        <p>This ad may have expired or is no longer available.</p>
-        <Link to="/">Browse listings</Link>
-      </main>
-    );
+    return null;
   }
 
   const listingImages =
@@ -411,9 +410,7 @@ const ProductDetail = ({
                 className="seller-report"
                 type="button"
                 onClick={() =>
-                  window.alert(
-                    "Thanks. This listing has been flagged for review.",
-                  )
+                  toast.success("Thanks. This listing has been flagged for review.")
                 }
               >
                 Report this ad

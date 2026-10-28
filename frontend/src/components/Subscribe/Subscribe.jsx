@@ -1,10 +1,8 @@
-import { useState } from "react";
 import "./Subscribe.css";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 const Subscribe = () => {
-  const [subscribed, setSubscribed] = useState(false);
-
   return (
     <section className="newsletter-band">
       <div className="newsletter-copy">
@@ -16,7 +14,7 @@ const Subscribe = () => {
         className="newsletter-form"
         onSubmit={(event) => {
           event.preventDefault();
-          setSubscribed(true);
+          toast.success("Thanks for subscribing.");
         }}
       >
         <label className="sr-only" htmlFor="newsletter-email">
@@ -27,24 +25,10 @@ const Subscribe = () => {
           type="email"
           placeholder="Your email address"
           required
-          onChange={() => setSubscribed(false)}
         />
         <button type="submit">
-          {subscribed ? (
-            <>
-              Subscribed <Check size={17} />
-            </>
-          ) : (
-            <>
-              Subscribe <ArrowRight size={17} />
-            </>
-          )}
+          Subscribe <ArrowRight size={17} />
         </button>
-        {subscribed && (
-          <p className="newsletter-status" role="status">
-            Thanks for subscribing.
-          </p>
-        )}
       </form>
     </section>
   );

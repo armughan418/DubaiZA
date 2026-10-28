@@ -19,6 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import "./PostAdModal.css";
 
 const steps = ["Category", "Details", "Specs", "Photos", "Location", "Reach"];
@@ -141,7 +142,6 @@ const PostAdModal = ({ onPublish, currentUser }) => {
     email: currentUser?.email || "",
     contactMethods: ["Chat"],
   });
-  const [error, setError] = useState("");
   const [isPublishing, setIsPublishing] = useState(false);
   const fileInputRef = useRef(null);
   const photoUrls = useRef(new Set());
@@ -156,13 +156,11 @@ const PostAdModal = ({ onPublish, currentUser }) => {
   const updateDetails = (event) => {
     const { name, value } = event.target;
     setDetails((current) => ({ ...current, [name]: value }));
-    setError("");
   };
 
   const updateReach = (event) => {
     const { name, value } = event.target;
     setReach((current) => ({ ...current, [name]: value }));
-    setError("");
   };
 
   const addPhotos = (files) => {
@@ -170,7 +168,7 @@ const PostAdModal = ({ onPublish, currentUser }) => {
     if (!selectedFiles.length) return;
     const remainingSlots = 8 - photos.length;
     if (selectedFiles.length > remainingSlots) {
-      setError(`You can add up to 8 photos. ${remainingSlots} slot(s) remain.`);
+      toast.error(`You can add up to 8 photos. ${remainingSlots} slot(s) remain.`);
       return;
     }
     const invalidFile = selectedFiles.find(
@@ -181,7 +179,7 @@ const PostAdModal = ({ onPublish, currentUser }) => {
         file.size > 10 * 1024 * 1024,
     );
     if (invalidFile) {
-      setError("Choose JPEG, PNG, WEBP, or GIF images up to 10 MB each.");
+      toast.error("Choose JPEG, PNG, WEBP, or GIF images up to 10 MB each.");
       return;
     }
     const selectedSize = [...photos, ...selectedFiles].reduce(
@@ -189,7 +187,7 @@ const PostAdModal = ({ onPublish, currentUser }) => {
       0,
     );
     if (selectedSize > 10 * 1024 * 1024) {
-      setError("The combined size of your listing photos must be 10 MB or less.");
+      toast.error("The combined size of your listing photos must be 10 MB or less.");
       return;
     }
     const newPhotos = selectedFiles.map((file) => {
@@ -198,7 +196,6 @@ const PostAdModal = ({ onPublish, currentUser }) => {
       return { file, preview };
     });
     setPhotos((current) => [...current, ...newPhotos]);
-    setError("");
   };
 
   const removePhoto = (preview) => {
@@ -237,10 +234,9 @@ const PostAdModal = ({ onPublish, currentUser }) => {
   const goNext = () => {
     const validationError = validateStep();
     if (validationError) {
-      setError(validationError);
+      toast.error(validationError);
       return;
     }
-    setError("");
     setStep((current) => Math.min(current + 1, steps.length - 1));
   };
 
@@ -251,18 +247,16 @@ const PostAdModal = ({ onPublish, currentUser }) => {
         ? current.contactMethods.filter((item) => item !== method)
         : [...current.contactMethods, method],
     }));
-    setError("");
   };
 
   const submitListing = async (event) => {
     event.preventDefault();
     const validationError = validateStep();
     if (validationError) {
-      setError(validationError);
+      toast.error(validationError);
       return;
     }
     setIsPublishing(true);
-    setError("");
     try {
       const images = await Promise.all(photos.map(({ file }) => readImage(file)));
       const specs = Object.fromEntries(
@@ -302,7 +296,7 @@ const PostAdModal = ({ onPublish, currentUser }) => {
       };
       await onPublish(listing);
     } catch (publishError) {
-      setError(
+      toast.error(
         publishError instanceof Error
           ? publishError.message
           : "Your listing could not be published. Please try again.",
@@ -349,7 +343,6 @@ const PostAdModal = ({ onPublish, currentUser }) => {
                 disabled={index >= step}
                 onClick={() => {
                   setStep(index);
-                  setError("");
                 }}
               >
                 <span className="wizard-step-number">
@@ -381,7 +374,6 @@ const PostAdModal = ({ onPublish, currentUser }) => {
                       aria-pressed={category === name}
                       onClick={() => {
                         setCategory(name);
-                        setError("");
                       }}
                     >
                       <span className="wizard-category-icon">
@@ -581,7 +573,6 @@ const PostAdModal = ({ onPublish, currentUser }) => {
                           ...current,
                           emirate: event.target.value,
                         }));
-                        setError("");
                       }}
                       value={location.emirate}
                     >
@@ -599,7 +590,6 @@ const PostAdModal = ({ onPublish, currentUser }) => {
                           ...current,
                           area: event.target.value,
                         }));
-                        setError("");
                       }}
                       placeholder="e.g. Dubai Marina"
                       value={location.area}
@@ -674,11 +664,6 @@ const PostAdModal = ({ onPublish, currentUser }) => {
                 </div>
               )}
 
-              {error && (
-                <p className="wizard-error" role="alert">
-                  {error}
-                </p>
-              )}
             </div>
 
             <footer className="wizard-footer">
@@ -691,7 +676,6 @@ const PostAdModal = ({ onPublish, currentUser }) => {
                   className="wizard-back"
                   onClick={() => {
                     setStep((current) => current - 1);
-                    setError("");
                   }}
                   type="button"
                 >

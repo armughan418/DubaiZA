@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { apiRequest } from "../lib/api";
+import { toast } from "react-hot-toast";
 import "./MyListings.css";
 
 const categories = [
@@ -23,8 +24,6 @@ const MyListings = ({ currentUser, onLogin, onListingChange, onProfileChange }) 
   });
   const [editingId, setEditingId] = useState(null);
   const [editValues, setEditValues] = useState(null);
-  const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const userId = currentUser?.id;
@@ -38,7 +37,7 @@ const MyListings = ({ currentUser, onLogin, onListingChange, onProfileChange }) 
         if (active) setListings(posts);
       })
       .catch((fetchError) => {
-        if (active) setError(fetchError.message);
+        if (active) toast.error(fetchError.message);
       })
       .finally(() => {
         if (active) setIsLoading(false);
@@ -50,8 +49,6 @@ const MyListings = ({ currentUser, onLogin, onListingChange, onProfileChange }) 
 
   const saveProfile = async (event) => {
     event.preventDefault();
-    setError("");
-    setNotice("");
     setIsSaving(true);
     try {
       const { user } = await apiRequest("/auth/me", {
@@ -60,9 +57,9 @@ const MyListings = ({ currentUser, onLogin, onListingChange, onProfileChange }) 
       });
       setProfile({ name: user.name, email: user.email });
       onProfileChange(user);
-      setNotice("Your profile has been updated.");
+      toast.success("Your profile has been updated.");
     } catch (saveError) {
-      setError(saveError.message);
+      toast.error(saveError.message);
     } finally {
       setIsSaving(false);
     }
@@ -78,14 +75,10 @@ const MyListings = ({ currentUser, onLogin, onListingChange, onProfileChange }) 
       price: listing.price.replace(/,/g, ""),
       priceUnit: listing.priceUnit || "AED",
     });
-    setError("");
-    setNotice("");
   };
 
   const saveListing = async (event) => {
     event.preventDefault();
-    setError("");
-    setNotice("");
     setIsSaving(true);
     try {
       const { post } = await apiRequest(`/posts/${editingId}`, {
@@ -99,9 +92,9 @@ const MyListings = ({ currentUser, onLogin, onListingChange, onProfileChange }) 
       onListingChange(post);
       setEditingId(null);
       setEditValues(null);
-      setNotice("Your listing has been updated.");
+      toast.success("Your listing has been updated.");
     } catch (saveError) {
-      setError(saveError.message);
+      toast.error(saveError.message);
     } finally {
       setIsSaving(false);
     }
@@ -109,15 +102,13 @@ const MyListings = ({ currentUser, onLogin, onListingChange, onProfileChange }) 
 
   const deleteListing = async (listing) => {
     if (!window.confirm(`Delete "${listing.title}"? This cannot be undone.`)) return;
-    setError("");
-    setNotice("");
     try {
       await apiRequest(`/posts/${listing.id}`, { method: "DELETE" });
       setListings((items) => items.filter((item) => item.id !== listing.id));
       onListingChange(null, listing.id);
-      setNotice("Your listing has been deleted.");
+      toast.success("Your listing has been deleted.");
     } catch (deleteError) {
-      setError(deleteError.message);
+      toast.error(deleteError.message);
     }
   };
 
@@ -149,9 +140,6 @@ const MyListings = ({ currentUser, onLogin, onListingChange, onProfileChange }) 
           </div>
           <Link to="/post-ad">Post a new ad</Link>
         </header>
-
-        {error && <p className="my-listings-message is-error" role="alert">{error}</p>}
-        {notice && <p className="my-listings-message is-success" role="status">{notice}</p>}
 
         <section className="account-profile-card">
           <div className="account-section-heading">

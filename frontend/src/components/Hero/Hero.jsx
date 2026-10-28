@@ -1,5 +1,6 @@
 import "./Hero.css";
 import { MapPin, MoveRight, Search } from "lucide-react";
+import { toast } from "react-hot-toast";
 
 const categories = [
   "All",
@@ -92,7 +93,7 @@ const Hero = ({
               <span>Not sure what you want? Let AI help.</span>
               <button
                 type="button"
-                onClick={() => window.alert("AI Assistant is coming soon.")}
+                onClick={() => toast("AI Assistant is coming soon.")}
               >
                 Ask AI Assistant
                 <MoveRight size={15} />

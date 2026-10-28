@@ -2,16 +2,14 @@ import { useState } from "react";
 import "../AuthModal.css";
 import { Check, X } from "lucide-react";
 import { apiRequest } from "../../lib/api";
+import { toast } from "react-hot-toast";
 
 const Register = ({ setRegister, setLogin }) => {
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    setError("");
     setIsSubmitting(true);
     try {
       await apiRequest("/auth/register", {
@@ -22,9 +20,11 @@ const Register = ({ setRegister, setLogin }) => {
           password: String(form.get("password") || ""),
         },
       });
-      setSuccess(true);
+      toast.success("Account created. Please log in.");
+      setRegister(false);
+      setLogin(true);
     } catch (registerError) {
-      setError(registerError.message);
+      toast.error(registerError.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -84,89 +84,63 @@ const Register = ({ setRegister, setLogin }) => {
           </div>
           <div className="register-right">
             <div className="right-text">
-              <h1 id="register-heading">
-                {success ? "Account Created" : "Create Account"}
-              </h1>
-              <p>
-                {success
-                  ? "Your account is ready. Log in to continue."
-                  : "Join DubaiZA to buy and sell across the UAE"}
-              </p>
+              <h1 id="register-heading">Create Account</h1>
+              <p>Join DubaiZA to buy and sell across the UAE</p>
             </div>
-            {success ? (
+            <h5>
+              <span>Register with email</span>
+            </h5>
+            <form className="auth-form" onSubmit={handleSubmit}>
+              <div className="input-wrapper">
+                <div className="input-box">
+                <label htmlFor="register-name">Full name</label>
+                <input
+                  autoComplete="name"
+                  id="register-name"
+                  maxLength={80}
+                  minLength={2}
+                  name="name"
+                  required
+                  type="text"
+                  placeholder="Your full name"
+                />
+                </div>
+                <div className="input-box">
+                <label htmlFor="register-email">Email</label>
+                <input
+                  autoComplete="email"
+                  id="register-email"
+                  name="email"
+                  required
+                  type="email"
+                  placeholder="you@example.com"
+                />
+                </div>
+                <div className="input-box">
+                <label htmlFor="register-password">Password</label>
+                <input
+                  autoComplete="new-password"
+                  id="register-password"
+                  maxLength={72}
+                  minLength={8}
+                  name="password"
+                  required
+                  type="password"
+                  placeholder="At least 8 characters"
+                />
+                </div>
+              </div>
               <button
                 className="auth-submit"
-                type="button"
-                onClick={() => {
-                  setRegister(false);
-                  setLogin(true);
-                }}
+                disabled={isSubmitting}
+                type="submit"
               >
-                Go to login
+                {isSubmitting ? "Creating account..." : "Create account"}
               </button>
-            ) : (
-              <>
-                <h5>
-                <span>Register with email</span>
-                </h5>
-                <form className="auth-form" onSubmit={handleSubmit}>
-                <div className="input-wrapper">
-                  <div className="input-box">
-                    <label htmlFor="register-name">Full name</label>
-                    <input
-                      autoComplete="name"
-                      id="register-name"
-                      maxLength={80}
-                      minLength={2}
-                      name="name"
-                      required
-                      type="text"
-                      placeholder="Your full name"
-                    />
-                  </div>
-                  <div className="input-box">
-                    <label htmlFor="register-email">Email</label>
-                    <input
-                      autoComplete="email"
-                      id="register-email"
-                      name="email"
-                      required
-                      type="email"
-                      placeholder="you@example.com"
-                    />
-                  </div>
-                  <div className="input-box">
-                    <label htmlFor="register-password">Password</label>
-                    <input
-                      autoComplete="new-password"
-                      id="register-password"
-                      maxLength={72}
-                      minLength={8}
-                      name="password"
-                      required
-                      type="password"
-                      placeholder="At least 8 characters"
-                    />
-                  </div>
-                </div>
-                {error && (
-                  <p className="auth-error" role="alert">
-                    {error}
-                  </p>
-                )}
-                <button
-                  className="auth-submit"
-                  disabled={isSubmitting}
-                  type="submit"
-                >
-                  {isSubmitting ? "Creating account..." : "Create account"}
-                </button>
-                <p className="auth-demo-note">
-                  Your password is encrypted before it is stored.
-                </p>
-                </form>
-              </>
-            )}
+              <p className="auth-demo-note">
+                Your password is encrypted before it is stored.
+              </p>
+            </form>
           </div>
         </div>
       </div>

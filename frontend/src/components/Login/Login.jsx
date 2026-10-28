@@ -2,15 +2,14 @@ import { useState } from "react";
 import "../AuthModal.css";
 import { Check, X } from "lucide-react";
 import { apiRequest } from "../../lib/api";
+import { toast } from "react-hot-toast";
 
 const Login = ({ setLogin, onAuthenticate }) => {
-  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    setError("");
     setIsSubmitting(true);
     try {
       const result = await apiRequest("/auth/login", {
@@ -22,7 +21,7 @@ const Login = ({ setLogin, onAuthenticate }) => {
       });
       onAuthenticate(result);
     } catch (loginError) {
-      setError(loginError.message);
+      toast.error(loginError.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -114,11 +113,6 @@ const Login = ({ setLogin, onAuthenticate }) => {
                   />
                 </div>
               </div>
-              {error && (
-                <p className="auth-error" role="alert">
-                  {error}
-                </p>
-              )}
               <button className="auth-submit" disabled={isSubmitting} type="submit">
                 {isSubmitting ? "Signing in..." : "Log in"}
               </button>
